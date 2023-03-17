@@ -1,0 +1,10 @@
+storage:
+  bucketNames:
+    chunks: chunks
+    ruler: ruler
+    admin: admin
+  type: gcs
+  gcs:
+    bucketName: altschool-3rd-sem-exam-loki
+    credentialsJson: service-account.json
+    project_id: altschool-371614
