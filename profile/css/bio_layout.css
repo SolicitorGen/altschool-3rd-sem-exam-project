@@ -1,0 +1,17 @@
+.bio {
+  padding-top: 70px;
+  padding-bottom: 70px;
+  background: #c7b9ff;
+}
+
+.bio__wrapper {
+  max-width: 1064px;
+  padding-left: 32px;
+  padding-right: 32px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bio__text {
+  padding: 90px 0px;
+}

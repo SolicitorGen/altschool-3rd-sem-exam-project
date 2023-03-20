@@ -1,0 +1,13 @@
+.hobby--image {
+  margin: auto;
+  object-fit: fill;
+  width: 80%;
+}
+
+.hobby__image {
+  padding: 50px 0;
+}
+
+.hobby--heading{
+  text-align: center;
+}

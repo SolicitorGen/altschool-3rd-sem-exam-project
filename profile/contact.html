@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kenneth Kafeero | Contact</title>
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/contact_layout.css" />
+    <link rel="stylesheet" href="./css/contact.css" />
+  </head>
+  <body>
+    <header class="m-header">
+      <nav class="m-navbar">
+        <ul class="list-unstyled m-navbar__nav">
+          <li class="m-navbar__nav__item"><a href="./index.html">About</a></li>
+          <li class="m-navbar__nav__item">
+            <a href="./register.html">Register</a>
+          </li>
+          <li class="m-navbar__nav__item">
+            <a href="./contact.html">Contact</a>
+          </li>
+          <li class="m-navbar__nav__item">
+            <a href="./calculator.html">Calculator</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <!-- Contact  -->
+    <section class="contact">
+      <div class="hero">
+        <div class="contact__header">
+          <h1>Contact me</h1>
+          <p>Feedback. Inquiry. Hello</p>
+        </div>
+        <div>
+          <form class="contact__form">
+            <div class="contact__form-group">
+              <label for="name">Full name</label>
+              <input type="text" name="name" required />
+            </div>
+            <div class="contact__form-group">
+              <label for="name">Email</label>
+              <input type="email" name="email" required />
+            </div>
+            <div class="contact__form-group">
+              <label for="name">Message</label>
+              <textarea name="message"></textarea>
+            </div>
+            <div class="">
+              <label for="pet-select">Priority</label>
+              <select name="priority">
+                <option value="select">--Select reason--</option>
+                <option value="dog">Feedback</option>
+                <option value="cat">Inquiry</option>
+                <option value="hamster">Hello</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

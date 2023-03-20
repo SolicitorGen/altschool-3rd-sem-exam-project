@@ -1,0 +1,17 @@
+.exp {
+  padding: 70px 0;
+}
+
+.exp--hero {
+  max-width: 1140px;
+  padding: 0 32px;
+  margin: 0 auto;
+}
+
+.exp--wrapper {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr;
+  align-items: center;
+  margin: 0 auto;
+}
