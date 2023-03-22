@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: profile-ingress
+  labels:
+    app.kubernetes.io/name: profile
+    app.kubernetes.io/instance: profile
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/redirect-regex: ^/(.*)  
+    nginx.ingress.kubernetes.io/redirect-replacement: /$1  
+    nginx.ingress.kubernetes.io/app-root: "index.html"
+spec:
+  rules:
+  - host: "k317.live"
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: profile
+            port:
+              name: http
