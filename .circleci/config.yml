@@ -21,8 +21,17 @@ jobs:
           name: Build Docker Image
           command: |
             cd /tmp/workspace/profile
+            VERSION=2.1.5
+            OS=amd64
+            curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v${VERSION}/docker-credential-gcr_${OS}_${ARCH}-${VERSION}.tar.gz" \
+            | tar xz docker-credential-gcr \
+            && chmod +x docker-credential-gcr && sudo mv docker-credential-gcr /usr/bin/
+
+            echo "${G_CLOUD_SERVICE_KEY}" > account.json
+            GOOGLE_APPLICATION_CREDENTIALS = account.json
+            docker-credential-gcr configure-docker
             docker build -t us.gcr.io/altschool-371614/profile:$CIRCLE_SHA1 .
-            echo "${G_CLOUD_SERVICE_KEY}" > account.json && docker login -u _json_key --password-stdin https://us.gcr.io < account.json
+            docker login -u _json_key --password-stdin https://us.gcr.io < account.json
             cat account.json
             docker push us.gcr.io/altschool-371614/profile:$CIRCLE_SHA1
 
