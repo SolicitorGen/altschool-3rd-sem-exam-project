@@ -1,44 +1,25 @@
 version: 2.1
+orbs:
+  gcp-gcr: circleci/gcp-gcr@0.15.1
 jobs:
-  set-up-workspace:
-    docker:
-      - image: cimg/base:stable  
+  build-and-push:
+    executor: gcp-gcr/default
     steps:
       - checkout
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-
-  build-docker-image:
-    docker:
-      - image: cimg/base:stable  
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - setup_remote_docker
-      - run:
-          name: Build Docker Image
-          command: |
-            cd /tmp/workspace/profile
-            VERSION=2.1.5
-            ARCH=amd64
-            OS=linux
-            curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v${VERSION}/docker-credential-gcr_${OS}_${ARCH}-${VERSION}.tar.gz" \
-            | tar xz docker-credential-gcr \
-            && chmod +x docker-credential-gcr && sudo mv docker-credential-gcr /usr/bin/
-
-            echo "${G_CLOUD_SERVICE_KEY}" > account.json
-            GOOGLE_APPLICATION_CREDENTIALS=account.json
-            docker-credential-gcr configure-docker
-            cat account.json
-            docker build -t us.gcr.io/altschool-371614/profile:$CIRCLE_SHA1 .
-            docker push us.gcr.io/altschool-371614/profile:$CIRCLE_SHA1
-
+      - gcp-gcr/gcr-auth:
+          gcloud-service-key: G_CLOUD_SERVICE_KEY
+          google-project-id: altschool-371614
+      - gcp-gcr/build-image:
+          google-project-id: altschool-371614
+          image: profile
+          no_output_timeout: 20m
+          registry-url: us.gcr.io
+      - gcp-gcr/push-image:
+          gcloud-service-key: G_CLOUD_SERVICE_KEY
+          google-project-id: altschool-371614
+          image: profile
+          registry-url: us.gcr.io
 workflows:
-  deploy:
+  commit:
     jobs:
-      - set-up-workspace
-      - build-docker-image:
-          requires:
-            - set-up-workspace
+      - build-and-push
