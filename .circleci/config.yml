@@ -40,7 +40,7 @@ jobs:
             cat serviceaccount.json
             gcloud auth activate-service-account --key-file serviceaccount.json
             gcloud config set project altschool-371614
-            gcloud container clusters get-credentials altschool-371614-gke --zone us-central1-a --project altschool-371614
+            gcloud container clusters get-credentials altschool-371614-gke --region us-central1 --project altschool-371614
             cd /tmp/workspace/helm/profile
             helm upgrade --install profile -n profile .  --create-namespace --set image.tag=$CIRCLE_SHA1
 
