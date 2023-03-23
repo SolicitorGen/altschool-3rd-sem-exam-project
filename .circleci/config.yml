@@ -1,25 +1,44 @@
 version: 2.1
-orbs:
-  gcp-gcr: circleci/gcp-gcr@0.15.1
 jobs:
-  build-and-push:
-    executor: gcp-gcr/default
+  set-up-workspace:
+    docker:
+      - image: cimg/base:stable  
     steps:
       - checkout
-      - gcp-gcr/gcr-auth:
-          gcloud-service-key: G_CLOUD_SERVICE_KEY
-          google-project-id: altschool-371614
-      - gcp-gcr/build-image:
-          google-project-id: altschool-371614
-          image: profile
-          no_output_timeout: 20m
-          registry-url: us.gcr.io
-      - gcp-gcr/push-image:
-          gcloud-service-key: G_CLOUD_SERVICE_KEY
-          google-project-id: altschool-371614
-          image: profile
-          registry-url: us.gcr.io
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  build-docker-image:
+    docker:
+      - image: cimg/base:stable  
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+          name: Build Docker Image
+          command: |
+            cd /tmp/workspace/profile
+            VERSION=2.1.5
+            OS=amd64
+            curl -fsSL "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-423.0.0-linux-arm.tar.gz" \
+            | tar xz gcloud \
+            && chmod +x gcloud && sudo mv gcloud /usr/bin/
+
+            echo "${G_CLOUD_SERVICE_KEY}" > serviceaccount.json
+            gcloud auth activate-service-account circleci@altschool-371614.iam.gserviceaccount.com --key-file=serviceaccount.json
+            GOOGLE_APPLICATION_CREDENTIALS = serviceaccount.json
+            gcloud auth print-access-token --project altschool-371614 | docker login -u oauth2accesstoken \                                                    ─╯
+            --password-stdin https://us.gcr.io
+            docker build -t us.gcr.io/altschool-371614/profile:$CIRCLE_SHA1 .
+            docker push us.gcr.io/altschool-371614/profile:$CIRCLE_SHA1
+
 workflows:
-  commit:
+  deploy:
     jobs:
-      - build-and-push
+      - set-up-workspace
+      - build-docker-image:
+          requires:
+            - set-up-workspace
