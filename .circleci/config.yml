@@ -28,7 +28,7 @@ jobs:
             && chmod +x docker-credential-gcr && sudo mv docker-credential-gcr /usr/bin/
 
             echo "${G_CLOUD_SERVICE_KEY}" > account.json
-            GOOGLE_APPLICATION_CREDENTIALS = account.json
+            GOOGLE_APPLICATION_CREDENTIALS=account.json
             docker-credential-gcr configure-docker
             docker build -t us.gcr.io/altschool-371614/profile:$CIRCLE_SHA1 .
             docker login -u _json_key --password-stdin https://us.gcr.io < account.json
