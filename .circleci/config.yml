@@ -22,7 +22,6 @@ jobs:
           command: |
             cd /tmp/workspace/profile
             echo "${G_CLOUD_SERVICE_KEY}" > serviceaccount.json
-            GOOGLE_APPLICATION_CREDENTIALS = serviceaccount.json
             docker login -u _json_key --password-stdin https://gcr.io < serviceaccount.json
             docker build -t us.gcr.io/altschool-371614/profile:$CIRCLE_SHA1 .
             docker push us.gcr.io/altschool-371614/profile:$CIRCLE_SHA1
