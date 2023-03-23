@@ -22,7 +22,8 @@ jobs:
           command: |
             cd /tmp/workspace/profile
             VERSION=2.1.5
-            OS=amd64
+            ARCH=amd64
+            OS=linux
             curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v${VERSION}/docker-credential-gcr_${OS}_${ARCH}-${VERSION}.tar.gz" \
             | tar xz docker-credential-gcr \
             && chmod +x docker-credential-gcr && sudo mv docker-credential-gcr /usr/bin/
