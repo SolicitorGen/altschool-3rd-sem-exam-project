@@ -4,3 +4,4 @@ terraform/plan
 terraform/.terraform/*
 notes.txt
 terraform/.terraform.lock.hcl
+.env
