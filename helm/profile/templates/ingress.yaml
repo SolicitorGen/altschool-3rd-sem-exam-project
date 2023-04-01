@@ -10,7 +10,7 @@ metadata:
     # kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/redirect-regex: ^/(.*)  
     nginx.ingress.kubernetes.io/redirect-replacement: /$1  
-    nginx.ingress.kubernetes.io/app-root: "index.html"
+    nginx.ingress.kubernetes.io/app-root: "app.html"
     cert-manager.io/issuer: "letsencrypt-prod"
 spec:
   rules:

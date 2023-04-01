@@ -28,6 +28,8 @@ spec:
   dnsNames:
   - grafana.k317.live
   - k317.live
+  - sockshop.k317.live
+  - profile.k317.live
   issuerRef:
     name: letsencrypt-cluster-issuer
     # We can reference ClusterIssuers by changing the kind here.
