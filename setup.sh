@@ -19,4 +19,4 @@ helm repo update
 helm upgrade --install grafana grafana/grafana -n monitoring --create-namespace -f "${CWDIR}/helm/grafana/values.yaml"
 helm upgrade --install loki grafana/loki -n monitoring --create-namespace
 helm upgrade --install prometheus prometheus-community/prometheus -n monitoring --create-namespace
-
+helm upgrade --install sockshop "${CWDIR}/helm/sockshop" -n sockshop --create-namespace
